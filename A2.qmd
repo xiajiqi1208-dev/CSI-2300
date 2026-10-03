@@ -1,0 +1,91 @@
+---
+title: "Lecture 03: Intro to Chart Types"
+subtitle: "The Great American Coffee Taste Test ☕️"
+author: "Your name goes here"
+format: pdf
+editor: visual
+execute:
+  messages: false
+  warnings: false
+---
+
+In 2023, [British YouTuber](https://www.youtube.com/channel/UCMb0O2CdPBNi-QqPk5T3gsQ) (and former [World Barista Champion](https://www.jameshoffmann.co.uk/work#/coffee-competitions/)) James Hoffman virtually hosted the [Great American Coffee Taste Test](https://www.youtube.com/watch?v=1fN_z4-EcOU), during which thousands of people simultaneously blind-tasted the same four coffees. Hoffman has published a [video summarizing the results](https://www.youtube.com/watch?v=bMOOQfeloH0), as well as [a spreadsheet of anonymized survey responses](https://bit.ly/gacttCSV+)from 4,000+ participants. It includes tasters’ demographics, general coffee drinking habits and preferences, assessments of the four coffees, and more. \[h/t Dan Brady\] (via [data-is-plural](https://www.data-is-plural.com/archive/2023-11-15-edition/))
+
+This assignment explores the five named graphs to explore the relationships between the variables in the coffee tasting data.
+
+Save this document as \`lecture03.qmd\` in a sensible place on your computer.
+
+Let's load the packages we'll need for our coffee tasting analysis. For the setup today, we'll use the packages in the tidyverse. Load them with the following code chunk and install if necessary.
+
+```{r}
+library(tidyverse)
+```
+
+1.  First order of business is to read in the data. Report the number of rows and columns Why are some of the columns duplicated? How was that data processed?
+2.  The column names are really long here. Let's rename some of them. Choose a case and be consistent!
+
+![](img/case.png)
+
+```{r}
+#| eval: false
+#| 
+ coffee %>%
+ rename(coffeeA_acid = `Coffee A - Acidity`) %>%
+ rename(coffeeA_bitter = `Coffee A - Bitterness`) %>%
+ rename(coffeeB_acid = `Coffee B - Acidity`) %>%
+ rename(coffeeB_bitter = `Coffee B - Bitterness`) %>%
+ rename(coffeeC_acid = `Coffee C - Acidity`) %>%
+ rename(coffeeC_bitter = `Coffee C - Bitterness`) %>%
+ rename(coffeeD_acid = `Coffee D - Acidity`) %>%
+ rename(coffeeD_bitter = `Coffee D - Bitterness`) -> coffee_clean
+```
+
+3.  Perhaps one of the first things we'd like to know is how much coffee the respondents drink regularly. Make a barplot here.
+
+```{r}
+
+```
+
+4.  Color the bar chart with the `fill` parameter to see what relationship the other survey items have to the daily coffee consumption. Show your plot here.
+5.  We'd like to see if there's a relationship between the user-reported levels of acidity and bitterness for each coffee. Make a scatterplot for coffee A.
+
+```{r}
+
+```
+
+6.  This isn't particularly informative What's going on? It looks like we only have 16 points. Try another geometry like `geom_jitter` and test out the `alpha` parameter.
+
+```{r}
+
+```
+
+7.  Now compare for coffees A, B, C, and D.
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+8.  Reordering different elements of charts is a FAQ in the tidyverse. Check the useful documentation [here](!%5Bhere%5D(https://ggplot2.tidyverse.org/articles/faq-reordering.html)).
+9.  What are the most popular flavor profiles reported in the data? Show your bar plot here. How can we improve it? What other variables might be interesting to cross it with. How can we reorder the bars in descending order of counts?
+
+```{r}
+
+```
+
+10. Let's see if there's a relationship between money spent on coffee and preceived expertise. we'll want to rename due to the way the spending variables is coded.
+
+```{r}
+
+```
+
+11. Clearly state a question you can ask of this data. It should involve a **single dimension** of the data (eg: a question about the distribution of a quantitative, or the count of a qualitative variable). Make a plot to address this question. Your plot should have a title and clear labels.
+12. Clearly state a question you can ask of this data concerning **at least two dimensions** of this data. Make a plot to address this question. Your plot should have a title and clear labels.
+13. **Bonus**: Freestyle. Use the `facet` family of functions to create an informative plot. Explain in words what your plot reveals.
