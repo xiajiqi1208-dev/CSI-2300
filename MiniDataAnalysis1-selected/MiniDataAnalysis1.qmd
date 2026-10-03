@@ -191,7 +191,16 @@ Your task is to create a table that calculates the proportion of missing values 
 
 ```{r}
 ### Explore missingness here ###
+missing_table <- wildfire |>
+  summarise(across(everything(), ~ mean(is.na(.x)))) |>
+  pivot_longer(
+    cols = everything(),
+    names_to = "variable",
+    values_to = "prop_missing"
+  ) |>
+  arrange(desc(prop_missing))
 
+missing_table |> print(n = Inf)
 ```
 
 
@@ -215,7 +224,7 @@ If missingness is not an issue, describe why.
 
 <!-------------------------- Start your work below ---------------------------->
 
-
+Missingness is not a major issue for this analysis because the variables used in the research questions have less than 20% missing data. Temperature and relative humidity each have about 10.8% missing values.
 
 
 <!----------------------------------------------------------------------------->
@@ -242,9 +251,21 @@ Show the first 6 rows of the tidied data.
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
 
+# Keep only the variables tied to my research questions:
+# temperature vs. humidity, and whether that relationship changes by fuel type
+wildfire_tidy <- wildfire |>
+  select(temperature, relative_humidity, fuel_type) |>
+  mutate(
+    # "Unknown" isn't a real fuel type, so treat it as missing
+    fuel_type = na_if(fuel_type, "Unknown"),
+    # Make fuel type a factor so it works nicely for grouping later
+    fuel_type = factor(fuel_type)
+  ) |>
+  # Drop rows missing any of the three variables
+  drop_na()
 
-
-
+# Take a quick look at the first 6 rows
+head(wildfire_tidy)
 ```
 
 <!----------------------------------------------------------------------------->
@@ -259,7 +280,19 @@ Show the outputted table.
 <!-------------------------- Start your work below ---------------------------->
 ```{r}
 
-
+# Summarize every numeric column (temperature and relative humidity)
+# with its mean, minimum, and maximum, ignoring any missing values
+wildfire_tidy |>
+  summarise(
+    across(
+      where(is.numeric),
+      list(
+        mean = ~ mean(.x, na.rm = TRUE),
+        min  = ~ min(.x, na.rm = TRUE),
+        max  = ~ max(.x, na.rm = TRUE)
+      )
+    )
+  )
 
 
 ```
